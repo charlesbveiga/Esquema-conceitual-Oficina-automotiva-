@@ -1,0 +1,74 @@
+Esquema conceitual — Oficina automotiva 
+
+CLIENTE 
+id_cliente (chave primária) 
+Nome
+CPF
+Endereço
+Telefone
+
+VEÍCULO 
+id_veículo (chave primária) 
+Placa (único) 
+Modelo 
+Marca 
+Ano 
+id_cliente (chave estrangeira) 
+
+EQUIPE 
+id_equipe (chave primária) 
+nome_equipe (opcional, para identificação) 
+
+MECÂNICO 
+id_mecânico (chave primária) 
+nome
+endereço 
+especialidade
+id_equipe (chave estrangeira) 
+ 
+ ORDEM_DE_SERVIÇO 
+ id_pedido (chave primária) 
+ número (único) 
+ data_de_emissão 
+ valor_total
+ status
+ data_de_conclusão
+ id_veículo (chave estrangeira) 
+ id_equipe (chave estrangeira) 
+ 
+ SERVIÇO 
+ id_serviço (chave primária) 
+ descrição 
+ custo_mão_de_obra (valor de referência) 
+ 
+PEÇA 
+id_peça (chave primária) 
+descrição 
+preço_unidade 
+
+Relacionamentos 
+CLIENTE 1 — N VEÍCULO
+(Um cliente pode possuir vários veículos, mas um veículo pertence a apenas um cliente)
+
+VEÍCULO 1 — N ORDEM_DE_SERVIÇO
+(Um veículo pode ter várias ordens de serviço ao longo do tempo, mas cada ordem de serviço é para um veículo específico)
+
+EQUIPE 1 — N MECÂNICO
+(Uma equipe tem vários mecânicos, mas um mecânico pertence a apenas uma equipe)
+
+EQUIPE 1 — N ORDEM_DE_SERVIÇO
+(Uma equipe é responsável por várias ordens de serviço, mas uma ordem de serviço é realizada por uma única equipe)
+
+ORDEM_DE_SERVIÇO N — N SERVIÇO
+(tabela associativa: ORDEM_DE_SERVIÇO_SERVIÇO)
+id_pedido (Chave estrangeira)
+id_serviço (Chave estrangeira)
+quantidade (opcional, para serviços recorrentes)
+valor_total_serviço (cálculo com base no valor de referência)
+
+ORDEM_DE_SERVIÇO N — N PEÇA
+(tabela associativa: ORDEM_DE_SERVIÇO_PARTIDO)
+id_pedido (Chave estrangeira)
+id_peça (Chave estrangeira)
+quantidade
+valor_total_peça (quantidade × preço_unidade)
